@@ -8921,7 +8921,7 @@ d3 = function() {
         }
         var a = d3_window.getComputedStyle ? d3_window.getComputedStyle(this, null).getPropertyValue(name) : window.getComputedStylePropertyValue(this, name), i;
         return a !== b && (i = interpolate(a, b), function(t) {
-          this.style.setProperty(name, i(t), priority);
+          (this.style || this.domNode.style).setProperty(name, i(t), priority);
         });
       }
       return b == null ? styleNull : (b += "", styleString);
@@ -8940,7 +8940,7 @@ d3 = function() {
     return this.tween("style." + name, function(d, i) {
       var f = tween.call(this, d, i, d3_window.getComputedStyle ? d3_window.getComputedStyle(this, null).getPropertyValue(name) : window.getComputedStylePropertyValue(this, name));
       return f && function(t) {
-        this.style.setProperty(name, f(t), priority);
+        (this.style || this.domNode.style).setProperty(name, f(t), priority);
       };
     });
   };
