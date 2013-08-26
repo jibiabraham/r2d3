@@ -43,7 +43,8 @@ d3_transitionPrototype.style = function(name, value, priority) {
         return a !== b && (i = interpolate(a, b), function(t) { this.setStyleProperty(name, i(t), priority); });
       }
       
-      var a = d3_window.getComputedStyle(this, null).getPropertyValue(name), i;
+      var a = d3_window.getComputedStyle ? d3_window.getComputedStyle(this, null).getPropertyValue(name) : window.getComputedStylePropertyValue(this, name), 
+          i;
       return a !== b && (i = interpolate(a, b), function(t) { this.style.setProperty(name, i(t), priority); });
     }
 
@@ -64,7 +65,7 @@ d3_transitionPrototype.styleTween = function(name, tween, priority) {
   }
   
   return this.tween("style." + name, function(d, i) {
-    var f = tween.call(this, d, i, d3_window.getComputedStyle(this, null).getPropertyValue(name));
+    var f = tween.call(this, d, i, d3_window.getComputedStyle ? d3_window.getComputedStyle(this, null).getPropertyValue(name) : window.getComputedStylePropertyValue(this, name));
     return f && function(t) { this.style.setProperty(name, f(t), priority); };
   });
 };
