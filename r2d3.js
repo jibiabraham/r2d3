@@ -7317,7 +7317,11 @@ d3 = function() {
       } else {
         value *= scale;
       }
-      value = type(value, precision);
+      try {
+        value = type(value, precision);
+      } catch (yuck_ie) {
+        value = type(value, 1);
+      }
       if (!zfill && comma) value = d3_format_group(value);
       var length = basePrefix.length + value.length + (zcomma ? 0 : negative.length), padding = length < width ? new Array(length = width - length + 1).join(fill) : "";
       if (zcomma) value = d3_format_group(padding + value);
